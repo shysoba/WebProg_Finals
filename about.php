@@ -1,3 +1,7 @@
+<?php
+include 'config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,27 +62,25 @@
 						<!-- menu start -->
 						<nav class="main-menu">
 							<ul>
-								<li class="current-list-item"><a href="index.php">Home</a>
-								</li>
+								<li class="current-list-item"><a href="index.php">Home</a></li>
 								<li><a href="about.php">About</a></li>
-								
-								<li><a href="booths.php">Art Fairs</a>
-									<ul class="sub-menu">
-										<li><a href="gallery.php">Gallery</a></li>
-										<li><a href="booths.php">Booths</a></li>
-									</ul>
-								</li>								
+								<li><a href="gallery.php">Gallery</a></li>								
 								<li><a href="shop.php">Shop</a></li>
 								<li><a href="contact.php">Contact</a></li>
 								<li>
 									<div class="header-icons">
-										<li><a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+									<li><a class="user" href="login.php"><i class="fa-solid fa-user"></i></a>
+										<li><a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"><span>
+											<?php $cart_count_query = mysqli_query($conn, "SELECT COUNT(*) AS cart_count FROM `cart`");
+											$cart_count_result = mysqli_fetch_assoc($cart_count_query);
+											echo $cart_count_result['cart_count'];?>
+										</span></i></a>
 										<ul class="sub-menu">
 											<li><a href="cart.php">Cart</a></li>
 											<li><a href="checkout.php">Check Out</a></li>											
 										</ul>
 									</div>
-								</li>
+								</li>								
 							</ul>
 						</nav>
 						<div class="mobile-menu"></div>
@@ -182,7 +184,7 @@
     <div class="team-members container-xxl py-5">
         <div class="container">
             <div class="section-title text-center">
-                <h1 class="members display-5 mb-5">Members</h1>
+                <h1 class="members display-5 mb-5">Main Team</h1>
             </div>			
 
 			<div class="row g-3">

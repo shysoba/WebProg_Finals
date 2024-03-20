@@ -1,3 +1,7 @@
+<?php
+include 'config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,11 +52,11 @@
         let colors = ['#89BDE5', '#6E92CD', '#AAC0F0', '#3260AA', '#437AD2'];
         // declared array of fonts to be used
         // soba: indecisive lng tlga ak...
-        let fonts = ['DOS', 'Fake Receipt', 'Mario', 'PoppinsB', 'Sprayers', 'Swiss', 'Poppins'];
+        let fonts = ['Fake Receipt', 'Poppins', 'Arial', 'Century Gothic'];
 
         // initializes typed.js lib for typing effect
         let typed = new Typed('.typing', {
-            strings: ['daloy', 'Daloy Studio', 'daloy studio', 'DALOY'],
+            strings: ['daloy', 'Daloy Studio', 'Welcome', 'DALOY', 'daloy'],
             typeSpeed: 100,
             backSpeed: 30,
             loop: true,
@@ -71,6 +75,7 @@
         });
     </script>
 	<!-- end typing script-->
+	
 	
 	<!-- header -->
 	<div class="top-header-area" id="sticker">
@@ -93,17 +98,17 @@
 								</li>
 								<li><a href="about.php">About</a></li>
 								
-								<li><a href="booths.php">Art Fairs</a>
-									<ul class="sub-menu">
-										<li><a href="exhibits.php">Exhibits</a></li>
-										<li><a href="booths.php">Booths</a></li>
-									</ul>
-								</li>								
+								<li><a href="gallery.php">Gallery</a></li>								
 								<li><a href="shop.php">Shop</a></li>
 								<li><a href="contact.php">Contact</a></li>
 								<li>
 									<div class="header-icons">
-										<li><a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+									<li><a class="user" href="login.php"><i class="fa-solid fa-user"></i></a>
+										<li><a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"><span>
+											<?php $cart_count_query = mysqli_query($conn, "SELECT COUNT(*) AS cart_count FROM `cart`");
+											$cart_count_result = mysqli_fetch_assoc($cart_count_query);
+											echo $cart_count_result['cart_count'];?>
+										</span></i></a>
 										<ul class="sub-menu">
 											<li><a href="cart.php">Cart</a></li>
 											<li><a href="checkout.php">Check Out</a></li>											
@@ -120,6 +125,7 @@
 		</div>
 	</div>
 	<!-- end header -->
+
 
 	<!-- hero area -->
 	<div class="hero-area hero-bg">
@@ -144,7 +150,7 @@
 		</div>
 	</div>
 	<!-- end hero area -->
-
+	
 	
 	<!-- advertisement section -->
 	<br><br>
@@ -166,6 +172,7 @@
 		</div>
 	</div>
 	<!-- end advertisement section -->
+
 
 	<!-- icon carousel -->
 		<div class="logo-carousel-section">
@@ -209,6 +216,7 @@
 			</div>
 		</div>
 	<!-- end icon carousel -->
+
 
 	<!-- product section -->
 	<div class="product-section mt-150 mb-150">
@@ -264,11 +272,11 @@
 				<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
 					<div class="list-box d-flex align-items-center">
 						<div class="list-icon">
-							<i class="fas fa-shipping-fast"></i>
+							<i class="fa-solid fa-heart"></i>
 						</div>
 						<div class="content">
-							<h3>Free Shipping</h3>
-							<p>When orders are over ₱550</p>
+							<h3>Artists</h3>
+							<p>Support local artists</p>
 						</div>
 					</div>
 				</div>
@@ -279,18 +287,18 @@
 						</div>
 						<div class="content">
 							<h3>Supportive</h3>
-							<p>Email us about your order</p>
+							<p>Talk to us about your order</p>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="list-box d-flex justify-content-start align-items-center">
 						<div class="list-icon">
-							<i class="fas fa-sync"></i>
+							<i class="fa-solid fa-hand-holding-heart"></i>
 						</div>
 						<div class="content">
-							<h3>Refund</h3>
-							<p>Get refund within 3 days!</p>
+							<h3>Handmade</h3>
+							<p>Get products made with love</p>
 						</div>
 					</div>
 				</div>

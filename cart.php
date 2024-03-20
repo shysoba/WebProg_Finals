@@ -79,8 +79,8 @@ if(isset($_GET['delete_all'])){
 </head>
 <body>
 
-	<!-- header -->
-	<div class="top-header-area" id="sticker">
+<!-- header -->
+<div class="top-header-area" id="sticker">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-sm-12 text-center">
@@ -98,19 +98,18 @@ if(isset($_GET['delete_all'])){
 							<ul>
 								<li class="current-list-item"><a href="index.php">Home</a>
 								</li>
-								<li><a href="about.php">About</a></li>
-								
-								<li><a href="booths.php">Art Fairs</a>
-									<ul class="sub-menu">
-										<li><a href="exhibits.php">Exhibits</a></li>
-										<li><a href="booths.php">Booths</a></li>
-									</ul>
-								</li>								
+								<li><a href="about.php">About</a></li>								
+								<li><a href="gallery.php">Gallery</a></li>	
 								<li><a href="shop.php">Shop</a></li>
 								<li><a href="contact.php">Contact</a></li>
 								<li>
 									<div class="header-icons">
-										<li><a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+									<li><a class="user" href="login.php"><i class="fa-solid fa-user"></i></a>
+										<li><a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"><span>
+											<?php $cart_count_query = mysqli_query($conn, "SELECT COUNT(*) AS cart_count FROM `cart`");
+											$cart_count_result = mysqli_fetch_assoc($cart_count_query);
+											echo $cart_count_result['cart_count'];?>
+										</span></i></a>
 										<ul class="sub-menu">
 											<li><a href="cart.php">Cart</a></li>
 											<li><a href="checkout.php">Check Out</a></li>											
@@ -144,23 +143,22 @@ if(isset($_GET['delete_all'])){
 	</div>
 	<!-- end breadcrumb section -->
 
-   <div class="container">
-
-<section class="cart-section mt-150 mb-150">
-   
-   <table class="cart-table">
-      <thead class="cart-table-head">
-      <tr class="table-head-row">
-         <th class="product-remove"></th>
-         <th class="product-image">Product Image</th>
-         <th class="product-name">Name</th>
-         <th class="product-type">Type</th> 
-         <th class="product-price">Price</th>
-         <th class="product-quantity">Quantity</th>
-         <th class="product-total">Total</th>
-      </tr>
-      </thead>
-      <tbody>
+	<div class="container">
+    <section class="cart-section text-center mt-150 mb-150">
+        <div class="table-responsive">
+            <table class="cart-table">
+			<thead class="cart-table-head">
+				<tr class="table-head-row">
+					<th class="product-remove"></th>
+					<th class="product-image">Product Image</th>
+					<th class="product-name">Name</th>
+					<th class="product-type">Type</th> 
+					<th class="product-price">Price</th>
+					<th class="product-quantity">Quantity</th>
+					<th class="product-total">Total</th>
+				</tr>
+			</thead>
+			<tbody>
 
          <?php 
          $select_cart = mysqli_query($conn, "SELECT * FROM `cart`");
@@ -194,11 +192,11 @@ if(isset($_GET['delete_all'])){
             <td colspan="2"><strong>Total: </strong> ₱<?php echo $grand_total; ?></td>
          </tr>
       </tbody>
-   </table>
+   </table><br>
 
    <div class="cart-buttons">
       <a href="checkout.php" class="boxed-btn <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>">Proceed to Checkout</a>
-   </div>
+   </div><br>
 
 </section>
 

@@ -2,59 +2,45 @@
 
 include 'config.php';
 
-if(isset($_POST['order_btn'])){
+if (isset($_POST['order_btn'])) {
+    $name = $_POST['name'];
+    $number = $_POST['number'];
+    $email = $_POST['email'];
+    $method = $_POST['method'];
+    $flat = $_POST['flat'];
+    $street = $_POST['street'];
+    $city = $_POST['city'];
+    $state = $_POST['state'];
+    $country = $_POST['country'];
+    $pin_code = $_POST['pin_code'];
 
-   $name = $_POST['name'];
-   $number = $_POST['number'];
-   $email = $_POST['email'];
-   $method = $_POST['method'];
-   $flat = $_POST['flat'];
-   $street = $_POST['street'];
-   $city = $_POST['city'];
-   $state = $_POST['state'];
-   $country = $_POST['country'];
-   $pin_code = $_POST['pin_code'];
+    $cart_query = mysqli_query($conn, "SELECT * FROM `cart`");
+    $price_total = 0;
+    $product_name = array(); // Initialize an empty array
+    if (mysqli_num_rows($cart_query) > 0) {
+        while ($product_item = mysqli_fetch_assoc($cart_query)) {
+            $product_name[] = $product_item['name'] . ' (' . $product_item['quantity'] . ') ';
+            $product_price = number_format($product_item['price'] * $product_item['quantity']);
+            $price_total += $product_price;
+        }
+    }
 
-   $cart_query = mysqli_query($conn, "SELECT * FROM `cart`");
-   $price_total = 0;
-   $product_name = array(); // Initialize an empty array
-   if(mysqli_num_rows($cart_query) > 0){
-      while($product_item = mysqli_fetch_assoc($cart_query)){
-         $product_name[] = $product_item['name'] .' ('. $product_item['quantity'] .') ';
-         $product_price = number_format($product_item['price'] * $product_item['quantity']);
-         $price_total += $product_price;
-      }
-   }
+    $total_product = implode(', ', $product_name);
+    $detail_query = mysqli_query($conn, "INSERT INTO `orders`(name, number, email, method, flat, street, city, state, country, pin_code, total_products, total_price) VALUES('$name','$number','$email','$method','$flat','$street','$city','$state','$country','$pin_code','$total_product','$price_total')") or die('query failed');
 
-   $total_product = implode(', ',$product_name);
-   $detail_query = mysqli_query($conn, "INSERT INTO `orders`(name, number, email, method, flat, street, city, state, country, pin_code, total_products, total_price) VALUES('$name','$number','$email','$method','$flat','$street','$city','$state','$country','$pin_code','$total_product','$price_total')") or die('query failed');
-
-   if($detail_query){
-      echo "
-      <div class='order-message-container'>
-      <div class='message-container'>
-         <h3>thank you for shopping!</h3>
-         <div class='order-detail'>
-            <span>".$total_product."</span>
-            <span class='total'> total : $".$price_total."/-  </span>
-         </div>
-         <div class='customer-details'>
-            <p> your name : <span>".$name."</span> </p>
-            <p> your number : <span>".$number."</span> </p>
-            <p> your email : <span>".$email."</span> </p>
-            <p> your address : <span>".$flat.", ".$street.", ".$city.", ".$state.", ".$country." - ".$pin_code."</span> </p>
-            <p> your payment mode : <span>".$method."</span> </p>
-            <p>(*pay when product arrives*)</p>
-         </div>
-            <a href='shop.php' class='btn'>continue shopping</a>
-         </div>
-      </div>
-      ";
-   }
-
+    if ($detail_query) {
+        // Empty the cart by deleting all items
+        $empty_cart_query = mysqli_query($conn, "DELETE FROM `cart`");
+        if ($empty_cart_query) {
+            echo "<script>alert('Your order will be processed as soon as possible! Thank you! ');</script>";
+        } else {
+            echo "<script>alert('Error: No items in cart');</script>";
+        }
+    }
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,7 +83,7 @@ if(isset($_POST['order_btn'])){
 
 </head>
 <body>
-
+	
 	<!-- header -->
 	<div class="top-header-area" id="sticker">
 		<div class="container">
@@ -119,17 +105,17 @@ if(isset($_POST['order_btn'])){
 								</li>
 								<li><a href="about.php">About</a></li>
 								
-								<li><a href="booths.php">Art Fairs</a>
-									<ul class="sub-menu">
-										<li><a href="exhibits.php">Exhibits</a></li>
-										<li><a href="booths.php">Booths</a></li>
-									</ul>
-								</li>								
+								<li><a href="gallery.php">Gallery</a></li>								
 								<li><a href="shop.php">Shop</a></li>
 								<li><a href="contact.php">Contact</a></li>
 								<li>
 									<div class="header-icons">
-										<li><a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+									<li><a class="user" href="login.php"><i class="fa-solid fa-user"></i></a>
+										<li><a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"><span>
+											<?php $cart_count_query = mysqli_query($conn, "SELECT COUNT(*) AS cart_count FROM `cart`");
+											$cart_count_result = mysqli_fetch_assoc($cart_count_query);
+											echo $cart_count_result['cart_count'];?>
+										</span></i></a>
 										<ul class="sub-menu">
 											<li><a href="cart.php">Cart</a></li>
 											<li><a href="checkout.php">Check Out</a></li>											
@@ -147,6 +133,7 @@ if(isset($_POST['order_btn'])){
 	</div>
 	<!-- end header -->
 
+
    <!-- breadcrumb-section -->
    <div class="breadcrumb-section breadcrumb-bg-checkout">
       <div class="container">
@@ -159,7 +146,7 @@ if(isset($_POST['order_btn'])){
             </div>
          </div>
       </div>
-   </div>
+   </div><br>
    <!-- end breadcrumb section -->
 
 
@@ -171,7 +158,7 @@ if(isset($_POST['order_btn'])){
 
    <form action="" method="post">
 
-   <div class="display-order">
+   <div class="checkout-form">
       <?php
          $select_cart = mysqli_query($conn, "SELECT * FROM `cart`");
          $total = 0;
@@ -185,7 +172,7 @@ if(isset($_POST['order_btn'])){
       <?php
          }
       }else{
-         echo "<div class='display-order'><span>your cart is empty!</span></div>";
+         echo "<div class='order-details'><span>your cart is empty!</span></div>";
       }
       ?>
       <span class="grand-total"> Total : ₱<?= $grand_total; ?> </span>
@@ -208,13 +195,12 @@ if(isset($_POST['order_btn'])){
             <span>Payment Method</span>
             <select name="method">
                <option value="cash on delivery" selected>Cash on Delivery</option>
-               <option value="credit cart">Bank Account</option>
-               <option value="paypal">Gcash</option>
+               <option value="gcash">GCash</option>
             </select>
          </div>
          <div class="inputBox">
             <span>Address line 1</span>
-            <input type="text" placeholder="e.g. Barangay no." name="flat" required>
+            <input type="text" placeholder="e.g. House no." name="flat" required>
          </div>
          <div class="inputBox">
             <span>Address line 2</span>
@@ -233,16 +219,14 @@ if(isset($_POST['order_btn'])){
             <input type="text" placeholder="e.g. PH" name="country" required>
          </div>
          <div class="inputBox">
-            <span>Pin code</span>
+            <span>Postal Code</span>
             <input type="text" placeholder="e.g. 1234" name="pin_code" required>
          </div>
       </div>
       <input type="submit" value="Order Now" name="order_btn" class="btn">
    </form>
-
 </section>
-
-</div>
+</div><br>
 
 	<!-- footer -->
 	<div class="footer-area">

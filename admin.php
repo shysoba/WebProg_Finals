@@ -101,56 +101,6 @@ if(isset($_GET['delete'])){
 </head>
 <body>
 
-	<!-- header -->
-	<div class="top-header-area" id="sticker">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 col-sm-12 text-center">
-					<div class="main-menu-wrap">
-						<!-- logo -->
-						<div class="site-logo">
-							<a href="index.php">
-								<img src="assets/images/logo.png" alt="">
-							</a>
-						</div>
-						<!-- logo -->
-
-						<!-- menu start -->
-						<nav class="main-menu">
-							<ul>
-								<li class="current-list-item"><a href="index.php">Home</a>
-								</li>
-								<li><a href="about.php">About</a></li>
-								
-								<li><a href="booths.php">Art Fairs</a>
-									<ul class="sub-menu">
-										<li><a href="gallery.php">Gallery</a></li>
-										<li><a href="booths.php">Booths</a></li>
-									</ul>
-								</li>								
-								<li><a href="shop.php">Shop</a></li>
-								<li><a href="contact.php">Contact</a></li>
-								<li>
-									<div class="header-icons">
-										<li><a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
-										<ul class="sub-menu">
-											<li><a href="cart.php">Cart</a></li>
-											<li><a href="checkout.php">Check Out</a></li>											
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</nav>
-						<div class="mobile-menu"></div>
-						<!-- menu end -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end header -->
-
-	
 	<!-- breadcrumb-section -->
 	<div class="breadcrumb-section breadcrumb-bg-about">
 		<div class="container">

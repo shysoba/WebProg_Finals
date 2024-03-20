@@ -1,62 +1,43 @@
 <?php
-require 'path/to/PHPMailer/src/PHPMailer.php';
-require 'path/to/PHPMailer/src/SMTP.php';
 
-if (empty($_POST['token'])) {
-    echo '<span class="notice">Error!</span>';
-    exit;
-}
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-$expectedToken = 'FsWga4&@f6aw';
+require 'assets/phpmailer/src/Exception.php';
+require 'assets/phpmailer/src/PHPMailer.php';
+require 'assets/phpmailer/src/SMTP.php';
+if (isset($_POST["send"])) {
 
-if ($_POST['token'] !== $expectedToken) {
-    echo '<span class="notice">Error!</span>';
-    exit;
-}
+  $mail = new PHPMailer(true);
 
-$name = htmlspecialchars($_POST['name']);
-$from = htmlspecialchars($_POST['email']);
-$phone = htmlspecialchars($_POST['phone']);
-$subject = htmlspecialchars(stripslashes(nl2br($_POST['subject'])));
-$message = htmlspecialchars(stripslashes(nl2br($_POST['message'])));
+    $mail->isSMTP();                           
+    $mail->Host       = 'smtp.gmail.com';      
+    $mail->SMTPAuth   = true;             
+    $mail->Username   = 'sobangees@gmail.com';   
+    $mail->Password   = 'tdiocieswdhanlde';     
+    $mail->SMTPSecure = 'ssl';           
+    $mail->Port       = 465;                                    
 
-$mail = new PHPMailer\PHPMailer\PHPMailer();
+    // recipients
+    $mail->setFrom( $_POST["email"], $_POST["name"]);
+    $mail->addAddress('sobangees@gmail.com');     
+    $mail->addReplyTo($_POST["email"], $_POST["name"]); 
 
-// Set up SMTP
-$mail->isSMTP();
-$mail->Host = 'smtp.gmail.com';
-$mail->SMTPAuth = true;
-$mail->Username = 'sobangee5sos@gmail.com'; 
-$mail->Password = 'hehe';
-$mail->SMTPSecure = 'tls';
-$mail->Port = 587;
+    // content
+    $mail->isHTML(true);
+    $mail->Subject = $_POST["subject"];
 
-// Set up the email content
-$mail->setFrom($from, 'Form Contact');
-$mail->addAddress('sobangee5sos@gmail.com');
-$mail->isHTML(true);
+    // message
+    $messageBody = $_POST["message"] . "<br><br>Contact Number: " . $_POST["phone"];    
+    $mail->Body = $messageBody;
+    $mail->send();
 
-$mail->Subject = 'Contact Form Submission';
-$mail->Body = "
-Daloy!<br /><br />
-" . ucfirst($name) . " has sent you a message via the contact form on your website!
-<br /><br />
-
-Name: " . ucfirst($name) . "<br />
-Email: $from<br />
-Phone: $phone<br />
-Subject: $subject<br />
-Message: <br /><br />
-$message
-<br />
-<br />
-============================================================
-";
-
-// Try to send the email
-if ($mail->send()) {
-    echo '<div class="success"><i class="fas fa-check-circle"></i><h3>Thank You!</h3>Your message has been sent successfully.</div>';
-} else {
-    echo '<div>Your message sending has failed! Error: ' . $mail->ErrorInfo . '</div>';
+    echo
+    " 
+    <script> 
+     alert('Thank you! Our team will reply to you as soon as possible. :]');
+     document.location.href = 'contact.php';
+    </script>
+    ";
 }
 ?>

@@ -29,8 +29,8 @@
 	ul.sub-menu li a {
 	    padding: 7px 10px;
 	}
-
 }
+
 /* Tablet Layout: 768px. */
 @media only screen and (min-width: 768px) and (max-width: 991px) { 
 	.hero-text h1 {
@@ -196,17 +196,29 @@
 
 /* Mobile Layout: 320px. */
 
-@media (max-width: 768px) {
-	.tagline {
-	  font-size: 85px;
+@media (max-width: 576px) {
+    .tagline {
+        font-size: 60px;
+    }
+
+    #search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+
+    #artist-filter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+	.product-filters{
+		padding-bottom: 10%;
 	}
-  }
-  
-  @media (max-width: 576px) {
-	.tagline {
-	  font-size: 60px; 
-	}
-  }
+}
+
   
 @media only screen and (max-width: 767px) {
 
@@ -356,7 +368,7 @@
 	}
 
 	.product-image {
-	    padding: 60px;
+	    padding: 30px;
 	    padding-bottom: 0;
 	}
 
@@ -563,6 +575,20 @@
 	    top: 22px;
 	    z-index: 999;
 	    color: #fff;
+	}
+	.login-container {
+	  padding: 30px 10px; 
+	}
+	.signup-container {
+	  top: 37%;
+	  padding: 20px;
+	}
+	.form-group {
+	  margin-bottom: 10px;
+	}
+	.form-group input,
+	.form-group button {
+	  padding: 8px;
 	}
 }
 /* Wide Mobile Layout: 480px. */

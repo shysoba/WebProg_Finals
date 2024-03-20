@@ -1,0 +1,59 @@
+:root {
+  --bg: #0c0c0c;
+}
+*{  
+  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #c8d2ef;
+}
+.gallery-container {  
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  width: 1000px;
+  margin: 0 auto 2em auto;
+  padding: 0.6em 0.5em;
+  display: flex;
+  justify-content: center;
+}
+.indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background: #003bc5;
+  border-radius: 100%;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.gallery {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  overflow: hidden;
+}
+
+.gallery-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 1 20px;
+  height: 400px;
+  margin: 0 5px;
+  background: #00000000;
+  overflow: hidden;
+  transition: flex 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.gallery-item img {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+}
